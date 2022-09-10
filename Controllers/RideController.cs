@@ -1,17 +1,17 @@
-﻿using CSharp_React.Servicies;
+﻿using Social_Taxi.Servicies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
-using CSharp_React.Authorization;
-using CSharp_React.EntityFramework;
-using CSharp_React.Models;
+using Social_Taxi.Authorization;
+using Social_Taxi.EntityFramework;
+using Social_Taxi.Models;
 using System.Collections.Generic;
-using CSharp_React.EntityFramework.Tables;
+using Social_Taxi.EntityFramework.Tables;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace CSharp_React.Controllers
+namespace Social_Taxi.Controllers
 {
     [Route("api/[controller]")]
     //[Authorize]

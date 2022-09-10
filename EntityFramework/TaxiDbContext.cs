@@ -1,8 +1,8 @@
-﻿using CSharp_React.EntityFramework.Tables;
+﻿using Social_Taxi.EntityFramework.Tables;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace CSharp_React.EntityFramework
+namespace Social_Taxi.EntityFramework
 {
     public class TaxiDbContext : DbContext
     {

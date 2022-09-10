@@ -1,10 +1,10 @@
-﻿using CSharp_React.Servicies;
+﻿using Social_Taxi.Servicies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CSharp_React.Hubs
+namespace Social_Taxi.Hubs
 {
     [Authorize]
     public class ChatHub : Hub

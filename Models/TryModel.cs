@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSharp_React.Models
+namespace Social_Taxi.Models
 {
     public class TryModel
     {

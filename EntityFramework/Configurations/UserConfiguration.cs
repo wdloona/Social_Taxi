@@ -1,9 +1,9 @@
-﻿using CSharp_React.EntityFramework.Tables;
+﻿using Social_Taxi.EntityFramework.Tables;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;
 
-namespace CSharp_React.EntityFramework.Configurations
+namespace Social_Taxi.EntityFramework.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

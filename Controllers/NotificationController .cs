@@ -1,5 +1,5 @@
-﻿using CSharp_React.Authorization;
-using CSharp_React.Servicies;
+﻿using Social_Taxi.Authorization;
+using Social_Taxi.Servicies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CSharp_React.EntityFramework.Tables
+namespace Social_Taxi.EntityFramework.Tables
 {
     public class Role
     {                      

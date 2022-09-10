@@ -1,7 +1,7 @@
-﻿using CSharp_React.Authorization;
-using CSharp_React.EntityFramework.Tables;
-using CSharp_React.Models;
-using CSharp_React.Servicies;
+﻿using Social_Taxi.Authorization;
+using Social_Taxi.EntityFramework.Tables;
+using Social_Taxi.Models;
+using Social_Taxi.Servicies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace CSharp_React.Controllers
+namespace Social_Taxi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

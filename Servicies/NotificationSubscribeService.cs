@@ -1,6 +1,6 @@
-﻿using CSharp_React.EntityFramework;
-using CSharp_React.EntityFramework.Tables;
-using CSharp_React.Models;
+﻿using Social_Taxi.EntityFramework;
+using Social_Taxi.EntityFramework.Tables;
+using Social_Taxi.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebPush;
 
-namespace CSharp_React.Servicies
+namespace Social_Taxi.Servicies
 {
     public class NotificationSubscribeService
     {

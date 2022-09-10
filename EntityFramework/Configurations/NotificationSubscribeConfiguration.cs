@@ -1,8 +1,8 @@
-﻿using CSharp_React.EntityFramework.Tables;
+﻿using Social_Taxi.EntityFramework.Tables;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CSharp_React.EntityFramework.Configurations
+namespace Social_Taxi.EntityFramework.Configurations
 {
     public class NotificationSubscribeConfiguration : IEntityTypeConfiguration<NotificationSubscribe>
     {

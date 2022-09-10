@@ -1,5 +1,5 @@
 ﻿
-namespace CSharp_React.EntityFramework.Tables
+namespace Social_Taxi.EntityFramework.Tables
 {
     public class NotificationSubscribe
     {                      

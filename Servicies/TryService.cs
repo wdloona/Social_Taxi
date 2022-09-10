@@ -1,9 +1,9 @@
-﻿using CSharp_React.Models;
+﻿using Social_Taxi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CSharp_React.Servicies
+namespace Social_Taxi.Servicies
 {
     public class TryService
     {

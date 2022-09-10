@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSharp_React.EntityFramework.Tables
+namespace Social_Taxi.EntityFramework.Tables
 {
     public class Ride
     {

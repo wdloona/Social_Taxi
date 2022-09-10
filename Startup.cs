@@ -1,6 +1,6 @@
-using CSharp_React.EntityFramework;
-using CSharp_React.Hubs;
-using CSharp_React.Servicies;
+using Social_Taxi.EntityFramework;
+using Social_Taxi.Hubs;
+using Social_Taxi.Servicies;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +17,7 @@ using System.IO;
 using System.Threading.Tasks;
 using WebPush;
 
-namespace CSharp_React
+namespace Social_Taxi
 {
     public class Startup
     {

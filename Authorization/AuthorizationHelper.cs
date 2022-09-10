@@ -1,9 +1,9 @@
-﻿using CSharp_React.Models;
+﻿using Social_Taxi.Models;
 using System;
 using System.Linq;
 using System.Security.Claims;
 
-namespace CSharp_React.Authorization
+namespace Social_Taxi.Authorization
 {
     public static class AuthorizationHelper
     {

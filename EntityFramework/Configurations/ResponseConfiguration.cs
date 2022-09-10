@@ -1,4 +1,4 @@
-﻿using CSharp_React.EntityFramework.Tables;
+﻿using Social_Taxi.EntityFramework.Tables;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSharp_React.EntityFramework.Configurations
+namespace Social_Taxi.EntityFramework.Configurations
 {
     public class ResponseConfiguration: IEntityTypeConfiguration<Response>
     {
