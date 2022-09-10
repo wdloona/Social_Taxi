@@ -70,7 +70,7 @@ const Login: FC<{ children?: ReactNode, className?: string }> = ({ className, ch
           </svg>
 
           <div className='text-2xl font-semibold text-slate-900'>Авторизация</div>
-          <div className="text-base font-medium text-slate-500">Сервис популярного социально-валантерского такси</div>
+          <div className="text-base font-medium text-slate-500">Сервис популярного социально-волонтерского такси</div>
 
         </div>
 
