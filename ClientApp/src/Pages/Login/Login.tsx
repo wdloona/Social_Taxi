@@ -1,5 +1,5 @@
-import { Form, Input, Button, Row, Col, Card, message } from 'antd';
-import { CSSProperties, FC, ReactNode, useContext } from 'react';
+import { Form, Input, Button, message } from 'antd';
+import { FC, ReactNode, useContext } from 'react';
 import { NotificationContext, NotificationService } from '../../Services';
 import { LoginType } from '../../Models';
 import { LoginService } from '../../Services';
@@ -30,7 +30,7 @@ const Login: FC<{ children?: ReactNode, className?: string }> = ({ className, ch
       }
       else {
         message.destroy();
-        message.error(r.message);
+        message.error(r.errorMessage);
       }
     }).catch((e) => {
       console.log(e);

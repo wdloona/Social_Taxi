@@ -9,7 +9,7 @@ const AuthView: FC<AuthViewProps> = ({ children }: AuthViewProps) => {
 
   const AuthCheck = async (): Promise<boolean> => {
     let result = await LoginService.getToken();
-    if (result != "") {
+    if (result.data !== undefined) {
       return true;
     }
     return false;

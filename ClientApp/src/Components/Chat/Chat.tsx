@@ -34,7 +34,8 @@ const Chat = (props: any) => {
           console.log('Connected!');
 
           connection.on('ReceiveMessage', (userId: string, message: string) => {
-            LoginService.getUser().then(currentUser => {
+            LoginService.getUser().then(response => {
+              let currentUser = response.data;
               const updatedChat = [...latestChat.current];
               updatedChat.push({ from: userId != currentUser.userId.toString(), message });
               setChat(updatedChat);

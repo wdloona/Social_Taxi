@@ -27,15 +27,17 @@ namespace Social_Taxi.Controllers
         }
 
         [HttpGet]
-        public string GetTokenFromCookie()
+        public BaseModel<string> GetTokenFromCookie()
         {
             var hasToken = HttpContext.Request.Cookies.ContainsKey("AccessToken");
-            return hasToken ? HttpContext.Request.Cookies["AccessToken"] : null;
+
+            return new BaseModel<string>(value: hasToken ? HttpContext.Request.Cookies["AccessToken"] : null);
         }
 
         [HttpPost]
-        public async Task<LoginResponseModel> AutorizeUser([FromBody] LoginModel loginModel)
+        public async Task<BaseModel<int>> AutorizeUser([FromBody] LoginModel loginModel)
         {
+            var userId = 0;
             if (!User.Identity.IsAuthenticated)
             {
                 var blockDateTime = _tryService.CheckLoginTry(new TryModel { 
@@ -44,24 +46,16 @@ namespace Social_Taxi.Controllers
                 });
 
                 if (blockDateTime.HasValue)
-                    return new LoginResponseModel()
-                    {
-                        Success = false,
-                        Message = $"Вход заблокирован до {blockDateTime.Value}!"
-                    };
+                    return new BaseModel<int>($"Вход заблокирован до {blockDateTime.Value}!");
 
                 var user = await _userService.GetUser(loginModel);
                 var identity = GetIdentity(user);
                 if (identity == null)
                 {
-                    return new LoginResponseModel() 
-                    { 
-                        Success = false,
-                        Message = "Не верный логин или пароль!"
-                    };
+                    return new BaseModel<int>("Не верный логин или пароль!");
                 }
-
-                HttpContext.Response.Cookies.Append("UserId", user.UserId.ToString());
+                userId = user.UserId;
+                HttpContext.Response.Cookies.Append("UserId", userId.ToString());
 
                 await HttpContext.SignInAsync("CookiesAuth", new ClaimsPrincipal(identity), new AuthenticationProperties
                 {
@@ -70,25 +64,23 @@ namespace Social_Taxi.Controllers
                 });
             }
 
-            return new LoginResponseModel();
+            return new BaseModel<int>(userId);
         }
 
         [HttpGet("Logout")]
-        public async Task<string> LogOutUser()
+        public async Task LogOutUser()
         {
             if (User.Identity.IsAuthenticated)
             {
                 await HttpContext.SignOutAsync("CookiesAuth");
             }
-
-            return null;
         }
 
         [Authorize]
         [HttpGet("user")]
-        public UserModel GetUserInfo()
+        public BaseModel<UserModel> GetUserInfo()
         {
-            return AuthorizationHelper.GetUser(User);
+            return new BaseModel<UserModel>(AuthorizationHelper.GetUser(User));
         }
 
         private ClaimsIdentity GetIdentity(User user)
