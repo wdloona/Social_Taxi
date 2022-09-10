@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "antd";
 import { GeoIcon } from "../CustomIcon";
 import { AutoCompleteInput } from "./Components";
@@ -18,15 +18,18 @@ const LeftSideControls = () => {
   //   console.log(dotState);
   // }, [dotState]);
 
-  const getValue = async (value:string) => {
+  const getValue = async (value:string,setFunc:React.Dispatch<any>) => {
+    console.log('getValue',value);
     const response = await geoCodingService.getForwardCoding(value)
     if(response){
       const { results } = response
       if(results.length > 0){
         const result = results.map<{ label:string,value:[number,number] }>((value) => {
-          return { label:value.formatted , value:[ value.geometry.lat, value.geometry.lng ] }
+          const  { city,country,house_number,road } =  value.components
+          const label = [ city,road,house_number ].filter(v => v !== undefined).join(", ")
+          return { label, value:[ value.geometry.lat, value.geometry.lng ] }
         })
-        return setDotAData(result)
+        return setFunc(result)
       }
     }
   }
@@ -40,11 +43,10 @@ const LeftSideControls = () => {
               <GeoIcon className="text-red-400" /> A
             </span>
           }
-          placeholder="Куда"
+          placeholder="Откуда"
           onChange={(value: string) => {
-            console.log(value);
             if (value?.length >= 3) {
-              getValue(value)
+              getValue(value,setDotAData)
             }
           }}
           onSelected={(option) => setDotState(prev => ({ ...prev,dotA:option }))}
@@ -57,15 +59,21 @@ const LeftSideControls = () => {
               <GeoIcon className="text-red-400" /> B
             </span>
           }
-          placeholder="Откуда"
-          onChange={(value: any) => {
-            // setDotState(prev => ({ ...prev, dotB:value }))
+          placeholder="Куда"
+          onChange={(value: string) => {
+            console.log(value);
+            if (value?.length >= 3) {
+              getValue(value,setDotBData)
+            }
           }}
+          onSelected={(option) => setDotState(prev => ({ ...prev,dotB:option }))}
+          defVal={dotState.dotB?.label}
+          options={dotBData}
         />
         <Button
           size="large"
           disabled={dotState.dotA === undefined || dotState.dotB === undefined}
-          className="rounded-lg disabled:bg-zinc-400 bg-yellow-300 hover:bg-yellow-400 hover:border-yellow-100 hover:text-black focus:bg-yellow-400 focus:border-yellow-100 focus:text-black"
+          className="rounded-lg text-lime-50 disabled:text-zinc-200 disabled:bg-zinc-400 bg-lime-400 hover:bg-lime-500 hover:border-lime-100 hover:text-black focus:bg-lime-400 focus:border-lime-100 focus:text-lime-500"
         >
           Заказать такси
         </Button>

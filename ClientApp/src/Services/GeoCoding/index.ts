@@ -7,7 +7,13 @@ const geoAxios = axios.create({
 })
 
 type CountryMapT = {
-    formatted:string
+    formatted:string,
+    components:{
+      city:string,
+      country:string
+      road:string
+      house_number:string
+    }
     geometry:{
         lat:number
         lng:number
@@ -19,7 +25,7 @@ const geoCodingService = {
         return res
     },
     getForwardCoding:async (text:string) => {
-        const res = await geoAxios.get<{ results:Array<CountryMapT> }>(`/json?key=${key}&q=${text}`)
+        const res = await geoAxios.get<{ results:Array<CountryMapT> }>(`/json?key=${key}&q=${text}&countrycode=ru&language=ru?abbrv=1&no_annotations=1`)
         return res.data
     }
 }
