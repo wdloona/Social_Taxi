@@ -38,7 +38,7 @@ namespace Social_Taxi.Controllers
                     {
                         RideId = x.RideId,
                         CreatorUserId = x.CreatorUserId,
-                        Address= new AddressModel
+                        RideSearchParams= new RideSearchParamsModel
                         {
                             StartPoint = x.StartPoint,
                             StartCity = x.StartCity,
@@ -48,12 +48,13 @@ namespace Social_Taxi.Controllers
                             EndCity = x.EndCity,
                             EndStreet = x.EndStreet,
                             EndHome = x.EndHome,
+                            BeginDate = x.BeginDate,
+                            EndDate = x.EndDate
                         },
-                        SeatsCount = x.SeatsCount,
-                        BeginDate = x.BeginDate,
-                        EndDate = x.EndDate,
+                        SeatsCount = x.SeatsCount,                       
                         FlActive = x.FlActive,
                         FlFinished = x.FlFinished,
+                        Description=x.Description,
                         Driver = new UserModel
                         {
                             UserId = (x.Response == null) ? 0 : x.Response.ResponseUserId,
@@ -115,7 +116,7 @@ namespace Social_Taxi.Controllers
                     {
                         RideId = x.RideId,
                         CreatorUserId = x.CreatorUserId,
-                        Address = new AddressModel
+                        RideSearchParams = new RideSearchParamsModel
                         {
                             StartPoint = x.StartPoint,
                             StartCity = x.StartCity,
@@ -125,10 +126,10 @@ namespace Social_Taxi.Controllers
                             EndCity = x.EndCity,
                             EndStreet = x.EndStreet,
                             EndHome = x.EndHome,
+                            BeginDate = x.BeginDate,
+                            EndDate = x.EndDate
                         },
-                        SeatsCount = x.SeatsCount,
-                        BeginDate = x.BeginDate,
-                        EndDate = x.EndDate,
+                        SeatsCount = x.SeatsCount,                      
                         FlActive = x.FlActive,
                         FlFinished = x.FlFinished,
                         Driver= new UserModel
@@ -156,7 +157,7 @@ namespace Social_Taxi.Controllers
 
 
         [HttpPost("byaddress")]
-        public async Task<List<RideModel>> GetRidesByAddress([FromBody] AddressModel address)
+        public async Task<List<RideModel>> GetRidesByAddress([FromBody] RideSearchParamsModel address, [FromQuery] bool flIsDriver)
         {
             List<RideModel> Rides = new();
             try
@@ -167,13 +168,15 @@ namespace Social_Taxi.Controllers
                                                                           (z.EndCity == address.EndCity || string.IsNullOrEmpty(address.EndCity) == true) &&
                                                                             (z.EndStreet == address.EndStreet || string.IsNullOrEmpty(address.EndStreet) == true) &&
                                                                               (z.EndHome == address.EndHome || string.IsNullOrEmpty(address.EndHome) == true) && z.FlFinished==false && z.FlActive==true);
+
+
                 //подходит ли адрес
                 Rides = await query.Select(x =>
                     new RideModel
                     {
                         RideId = x.RideId,
                         CreatorUserId = x.CreatorUserId,
-                        Address= new AddressModel 
+                        RideSearchParams= new RideSearchParamsModel 
                         {
                             StartPoint = x.StartPoint,
                             StartCity = x.StartCity,
@@ -183,10 +186,10 @@ namespace Social_Taxi.Controllers
                             EndCity = x.EndCity,
                             EndStreet = x.EndStreet,
                             EndHome = x.EndHome,
+                            BeginDate = x.BeginDate,
+                            EndDate = x.EndDate,
                         },
-                        SeatsCount = x.SeatsCount,
-                        BeginDate = x.BeginDate,
-                        EndDate = x.EndDate,
+                        SeatsCount = x.SeatsCount,                      
                         FlActive = x.FlActive
                     }).ToListAsync();
 
@@ -205,17 +208,17 @@ namespace Social_Taxi.Controllers
             try
             {
                 Ride EditRide =  await _dbContext.Set<Ride>().Where(z => z.RideId == ride.RideId).FirstOrDefaultAsync();
-                    EditRide.StartPoint = ride.Address.StartPoint;
-                    EditRide.StartCity = ride.Address.StartCity;
-                    EditRide.StartStreet = ride.Address.StartStreet;
-                    EditRide.StartHome = ride.Address.StartHome;
-                    EditRide.EndPoint = ride.Address.EndPoint;
-                    EditRide.EndCity = ride.Address.EndCity;
-                    EditRide.EndStreet = ride.Address.EndStreet;
-                    EditRide.EndHome = ride.Address.EndHome;
+                    EditRide.StartPoint = ride.RideSearchParams.StartPoint;
+                    EditRide.StartCity = ride.RideSearchParams.StartCity;
+                    EditRide.StartStreet = ride.RideSearchParams.StartStreet;
+                    EditRide.StartHome = ride.RideSearchParams.StartHome;
+                    EditRide.EndPoint = ride.RideSearchParams.EndPoint;
+                    EditRide.EndCity = ride.RideSearchParams.EndCity;
+                    EditRide.EndStreet = ride.RideSearchParams.EndStreet;
+                    EditRide.EndHome = ride.RideSearchParams.EndHome;
                     EditRide.SeatsCount = ride.SeatsCount;
-                    EditRide.BeginDate = ride.BeginDate;
-                    EditRide.EndDate = ride.EndDate;
+                    EditRide.BeginDate = ride.RideSearchParams.BeginDate;
+                    EditRide.EndDate = ride.RideSearchParams.EndDate;
                     EditRide.Description = ride.Description;
                     
                     await _dbContext.SaveChangesAsync();
@@ -235,19 +238,20 @@ namespace Social_Taxi.Controllers
                 var RideToAdd = new Ride
                 {
                     CreatorUserId = ride.CreatorUserId,
-                    StartPoint = ride.Address.StartPoint,
-                    StartCity = ride.Address.StartCity,
-                    StartStreet = ride.Address.StartStreet,
-                    StartHome = ride.Address.StartHome,
-                    EndPoint = ride.Address.StartPoint,
-                    EndCity = ride.Address.EndCity,
-                    EndStreet = ride.Address.EndStreet,
-                    EndHome = ride.Address.EndHome,
+                    StartPoint = ride.RideSearchParams.StartPoint,
+                    StartCity = ride.RideSearchParams.StartCity,
+                    StartStreet = ride.RideSearchParams.StartStreet,
+                    StartHome = ride.RideSearchParams.StartHome,
+                    EndPoint = ride.RideSearchParams.StartPoint,
+                    EndCity = ride.RideSearchParams.EndCity,
+                    EndStreet = ride.RideSearchParams.EndStreet,
+                    EndHome = ride.RideSearchParams.EndHome,
                     SeatsCount = ride.SeatsCount,
-                    BeginDate = ride.BeginDate,
-                    EndDate = ride.EndDate,
+                    BeginDate = ride.RideSearchParams.BeginDate,
+                    EndDate = ride.RideSearchParams.EndDate,
                     FlActive = true,
-                    FlFinished = false
+                    FlFinished = false,
+                    Description=ride.Description
                     
                 };
                 await _dbContext.AddAsync(RideToAdd);

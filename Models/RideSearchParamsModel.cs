@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Social_Taxi.Models
 {
-    public class AddressModel
+    public class RideSearchParamsModel
     {
         public string StartPoint { get; set; }
         public string StartCity { get; set; }
@@ -15,6 +15,9 @@ namespace Social_Taxi.Models
         public string EndCity { get; set; }
         public string EndStreet { get; set; }
         public string EndHome { get; set; }
+        public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
+
 
     }
 }
