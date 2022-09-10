@@ -9,10 +9,8 @@ namespace Social_Taxi.Models
     {
         public int RideId { get; set; }
         public int CreatorUserId { get; set; }
-        public AddressModel Address { get; set; }
+        public RideSearchParamsModel RideSearchParams { get; set; }
         public int SeatsCount { get; set; }
-        public DateTime BeginDate { get; set; }
-        public DateTime EndDate { get; set; }
         public bool FlActive { get; set; }
         public bool FlFinished { get; set; }
         public string Description { get; set; }
