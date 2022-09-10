@@ -46,7 +46,7 @@ const Login: FC<{ children?: ReactNode, className?: string }> = ({ className, ch
 
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center m-5">
+    <div className="min-h-screen flex flex-col items-center justify-center p-5">
 
       <Form
         className='max-w-[380px] flex flex-col gap-6 p-5'
@@ -54,6 +54,7 @@ const Login: FC<{ children?: ReactNode, className?: string }> = ({ className, ch
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
+        layout="vertical"
       >
 
         <div className="flex flex-col items-center gap-4 text-center">
@@ -73,32 +74,32 @@ const Login: FC<{ children?: ReactNode, className?: string }> = ({ className, ch
 
         </div>
 
+        <div className='flex flex-col gap-4'>
         <Form.Item
           required={true}
-          label="Логин"
+          label="Логин:"
           name="username"
           rules={[{ required: true, message: 'Пожалуйста, введите ваш логин!' }]}
         >
-          <Input />
+          <Input className='rounded-md text-sm font-medium h-10 px-4'/>
         </Form.Item>
 
         <Form.Item
           required={true}
-          label="Пароль"
+          label="Пароль:"
           name="password"
           rules={[{ required: true, message: 'Пожалуйста, введите ваш пароль!' }]}
         >
-          <Input.Password />
+          <Input.Password className='rounded-md text-sm font-medium h-10 px-4 gap-2' />
         </Form.Item>
+        </div>
 
-        <Form.Item wrapperCol={{ offset: 6 }} >
-          <Button type="primary" htmlType="submit">
+        <Form.Item >
+          <Button type="primary" htmlType="submit" className='w-full h-10 rounded-md bg-lime-500 text-lime-50 text-sm font-medium border-0'>
             Войти
           </Button>
         </Form.Item>
       </Form>
-
-
     </div>
   )
 }
