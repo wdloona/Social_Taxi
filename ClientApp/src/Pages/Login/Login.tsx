@@ -49,7 +49,7 @@ const Login: FC<{ children?: ReactNode, className?: string }> = ({ className, ch
     <div className="min-h-screen flex flex-col items-center justify-center p-5">
 
       <Form
-        className='max-w-[380px] flex flex-col gap-6 p-5'
+        className='max-w-[340px] flex flex-col gap-6 p-5'
         name="basic"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}

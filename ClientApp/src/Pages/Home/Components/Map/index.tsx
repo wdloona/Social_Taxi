@@ -18,7 +18,7 @@ const CreateMap = () => {
 
   })
   L.control.zoom({
-    position:'topright'
+    position:'bottomright'
   }).addTo(_map)
   L.Routing.control({
     waypoints: [
@@ -30,7 +30,7 @@ const CreateMap = () => {
 };
 
 
-const Map = () => {
+const Map = (className:any) => {
 
   return (
     <MapContainer
@@ -38,9 +38,10 @@ const Map = () => {
         zoom={20}
         scrollWheelZoom
         id='map-container'
-        className="w-full h-full"
+        className={"w-full h-full " + className}
         placeholder={null}
         zoomControl={false}
+        style={{position:'absolute'}}
       >
         <TileLayer url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <CreateMap />
