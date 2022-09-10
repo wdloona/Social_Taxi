@@ -16,3 +16,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-form-item {
+  margin: 0 !important;
+}
+
+.ant-form-item-explain-connected {
+  padding-top: 8px;
+  padding-left: 8px;
+}
+
+.ant-form-item-label label {
+  color: #64748b;
+  font-weight: 500;
+}
