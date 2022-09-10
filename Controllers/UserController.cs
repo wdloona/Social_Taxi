@@ -28,23 +28,28 @@ namespace Social_Taxi.Controllers
 
         [HttpPut]
         public async Task<int> EditUser([FromBody] UserModel user)
-        {
-            var currentUser = AuthorizationHelper.GetUser(User);
+        {           
             try
             {
-                User User = await _dbContext.Set<User>().Where(z => z.UserId == user.UserId).FirstOrDefaultAsync();
-                if (User != null)
-                {
-                    User.UserName = user.UserName;
-                    User.UserSurname = user.UserSurname;
-                    User.UserPatronymic = user.UserPatronymic;
-                    User.Age = user.Age;
-                    User.DriverLicenceNumber = user.DriverLicenceNumber;
-                    User.DrivingExperience = user.DrivingExperience;
-
-                }
+                var currentUser = AuthorizationHelper.GetUser(User);
                 if (currentUser.RoleId == 1 || user.UserId == currentUser.UserId)
                 {
+                    User User = await _dbContext.Set<User>().Where(z => z.UserId == user.UserId).FirstOrDefaultAsync();
+                    if (User != null)
+                    {
+                        User.UserName = user.UserName;
+                        User.UserSurname = user.UserSurname;
+                        User.UserPatronymic = user.UserPatronymic;
+                        User.PhoneNumber = user.PhoneNumber;
+                        User.Password = Authorization.AuthorizationOptions.ComputePassSha256Hash(user.Password);
+                        if (currentUser.RoleId == 1)
+                        {
+                            User.Age = user.Age;
+                            User.DriverLicenceNumber = user.DriverLicenceNumber;
+                            User.DrivingExperience = user.DrivingExperience;
+                            User.IsBlocked = user.IsBlocked;
+                        }
+                    }             
                     await _dbContext.SaveChangesAsync();
                     return 1;
                 }
@@ -67,19 +72,21 @@ namespace Social_Taxi.Controllers
             {
                 if (currentUser.RoleId == 1)
                 {
-                    User AddUser = new();
-                    AddUser.RoleId = user.RoleId;
-                    AddUser.Login = user.Login;
-                    AddUser.Password = Authorization.AuthorizationOptions.ComputePassSha256Hash(user.Password);
-                    AddUser.UserName = user.UserName;
-                    AddUser.UserSurname = user.UserSurname;
-                    AddUser.UserPatronymic = user.UserPatronymic;
-                    AddUser.Age = user.Age;
-                    AddUser.PhoneNumber = user.PhoneNumber;
-                    AddUser.DriverLicenceNumber = user.DriverLicenceNumber;
-                    AddUser.DrivingExperience = user.DrivingExperience;
+                    User AddUser = new()
+                    { 
+                        RoleId = user.RoleId,
+                        Login = user.Login,
+                        Password = Authorization.AuthorizationOptions.ComputePassSha256Hash(user.Password),
+                        UserName = user.UserName,
+                        UserSurname = user.UserSurname,
+                        UserPatronymic = user.UserPatronymic,
+                        Age = user.Age,
+                        PhoneNumber = user.PhoneNumber,
+                        DriverLicenceNumber = user.DriverLicenceNumber,
+                        DrivingExperience = user.DrivingExperience,
+                        IsBlocked=user.IsBlocked
+                    };
 
-                
                     await _dbContext.AddAsync(AddUser);
                     await _dbContext.SaveChangesAsync();
                     return 1;

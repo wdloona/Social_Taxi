@@ -84,16 +84,17 @@ namespace Social_Taxi.Controllers
                            ResponseUserId=x.ResponseUserId,
                            RideModel=new RideModel
                            {
-                               RideId=x.RideId,
-                               BeginDate=x.Ride.BeginDate,
+                               RideId=x.RideId,                            
                                FlActive=x.Ride.FlActive,
-                               EndDate=x.Ride.EndDate,
                                FlFinished=x.Ride.FlFinished,
-                               Address= new AddressModel
+                               RideSearchParams= new RideSearchParamsModel
                                {
-                                   StartCity=x.Ride.StartCity,
-                                   EndCity=x.Ride.EndCity
-                               }                             
+                                   BeginDate = x.Ride.BeginDate,
+                                   StartCity =x.Ride.StartCity,
+                                   EndCity=x.Ride.EndCity,
+                                   EndDate = x.Ride.EndDate,
+
+                               }
                            }  
 
                         }).ToListAsync();
