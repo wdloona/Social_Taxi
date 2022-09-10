@@ -31,7 +31,8 @@ namespace Social_Taxi.Controllers
             List <RideModel> Rides = new();
             try
             {
-                if (userId != 0)
+                var currentUser = AuthorizationHelper.GetUser(User);
+                if (userId != 0 && (currentUser.UserId==userId || currentUser.RoleId==1))
                 {
                     Rides = await _dbContext.Set<Ride>().Include(o => o.Response).ThenInclude(o => o.User).Where(z => z.CreatorUserId == userId).Select(x =>
                     new RideModel
@@ -144,6 +145,9 @@ namespace Social_Taxi.Controllers
                         }
                         
                     }).FirstOrDefaultAsync();
+
+                    //var currentUser = AuthorizationHelper.GetUser(User);
+                    //if (currentUser.UserId == Ride.CreatorUserId || currentUser.RoleId == 1))
                 }
 
             }
@@ -208,6 +212,9 @@ namespace Social_Taxi.Controllers
             try
             {
                 Ride EditRide =  await _dbContext.Set<Ride>().Where(z => z.RideId == ride.RideId).FirstOrDefaultAsync();
+                var currentUser = AuthorizationHelper.GetUser(User);
+                if (EditRide != null && (currentUser.UserId == EditRide.CreatorUserId || currentUser.RoleId == 1))
+                {
                     EditRide.StartPoint = ride.RideSearchParams.StartPoint;
                     EditRide.StartCity = ride.RideSearchParams.StartCity;
                     EditRide.StartStreet = ride.RideSearchParams.StartStreet;
@@ -220,9 +227,14 @@ namespace Social_Taxi.Controllers
                     EditRide.BeginDate = ride.RideSearchParams.BeginDate;
                     EditRide.EndDate = ride.RideSearchParams.EndDate;
                     EditRide.Description = ride.Description;
-                    
+
                     await _dbContext.SaveChangesAsync();
-                    return 1;           
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
             }
             catch
             {
@@ -251,8 +263,7 @@ namespace Social_Taxi.Controllers
                     EndDate = ride.RideSearchParams.EndDate,
                     FlActive = true,
                     FlFinished = false,
-                    Description=ride.Description
-                    
+                    Description=ride.Description                
                 };
                 await _dbContext.AddAsync(RideToAdd);
                 await _dbContext.SaveChangesAsync();
@@ -270,9 +281,13 @@ namespace Social_Taxi.Controllers
         {
             try
             {
-                Ride EditRide = await _dbContext.Set<Ride>().Where(z => z.RideId == rideId).FirstOrDefaultAsync();
-                _dbContext.Remove(EditRide);
-                await _dbContext.SaveChangesAsync();
+                Ride DeleteRide = await _dbContext.Set<Ride>().Where(z => z.RideId == rideId).FirstOrDefaultAsync();
+                var currentUser = AuthorizationHelper.GetUser(User);
+                if (DeleteRide !=null && (currentUser.UserId == DeleteRide.CreatorUserId || currentUser.RoleId == 1))
+                {
+                    _dbContext.Remove(DeleteRide);
+                    await _dbContext.SaveChangesAsync();
+                }
                 return 1;
             }
             catch
